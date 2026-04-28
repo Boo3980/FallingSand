@@ -253,7 +253,12 @@ int main() {
 
 //													>>>>	DAY TWO		<<<<
 //		What i learnt: 
-//					1. 
+//					1. graphics shader pipeline
+//					2. how to initialize fragment and vertex shaders
+//					3. learnt about this weird vertex source code that we compile manually
+//					4. OpenGL objects can only be accessed by reference 
+//					5. how GIT works and branched it into second day opengl
+//					6. 
 //					
 //		What tinkering i did:
 //					1. made the color generate continuously and generate randomly

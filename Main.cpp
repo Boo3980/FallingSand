@@ -262,14 +262,35 @@ int main() {
 //					
 //		What tinkering i did:
 //					1. made the color generate continuously and generate randomly
-//					2. 
+//					2. i made a rectangle. right now the only way to do it is use 4 vertices 
+//					   and make 2 triangles using them. 
+//				
 //				
 //		What i learnt, did again etc:
 //					1. use of <chrono> and <thread> libraries to use add delay/sleep; 
 //					   the existence of chrono(time) literals using std::chrono::(seconds,milliseconds, hours etc)
-//					2. 
-//					
-
+//					2. for thelongest time i could not even render the triangle i made in the main one
+//					   i then checked and found that i had forgotten some lines
+//							the flow goes as follows:
+//										1. get glsl shader lines 
+//										2. make vertices array
+//										3. glCreateShader() for vertex and fragment shaders
+//										4. then give them source with glShaderSource()
+// 										5. glCompileShader() to compile [ holy shit!! ]
+// 										6. make a "program" to bind the shaders to. and after binding delete them
+// 									we have vertices and shaders now but 
+//									where to put them? it wont display automatically
+//										7. make verticeArray object and vertexBuffer object
+//										8. order is important. 
+// 										   VAO with glGenVertexArrays(1, &VAO)
+//										   VBO with glGenBuffers(1, &VBO)
+// 										9. bind the arrays
+// 										   VAO with glBindVertexArrays()
+// 										   VBO with glBindBuffers()
+// 									   10. after binding the buffer needs the data 
+// 										   glBufferData(GL_ARRAY_BUFFER, sizeof, type, GL_STATIC/DYNAMIC/_DRAW/READ/WRITE)
+//									   11. mention array attriubte and then >>ENABLE THE ARRAY<<
+//					3. that's it for today lmao
 
 
 

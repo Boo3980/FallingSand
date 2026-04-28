@@ -152,16 +152,16 @@ int main() {
 
 
 
-	GLuint VAO, VBO;
+	GLuint VAO = 0, VBO = 0;
 	//vertexArray object and vertexBuffer object
 	glGenVertexArrays(1, &VBO);
 	glGenBuffers(1, &VBO);
-	
-	
-
-
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_TRUE, 3 * sizeof(float), (void*)0);
 	
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 
 	while (!glfwWindowShouldClose(window_name))
 	{
@@ -170,6 +170,8 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 		slowburn(c);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+
 		glfwSwapBuffers(window_name);
 		glfwSwapInterval(0);
 		glfwPollEvents();

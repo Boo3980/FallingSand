@@ -173,7 +173,8 @@ int main() {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
 		glUseProgram(shaderProgram);
-		glDrawArrays(GL_TRIANGLES, )
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 1, 3);
 		glBindVertexArray(0);
 		glfwSwapBuffers(window_name);
 		glfwSwapInterval(0);

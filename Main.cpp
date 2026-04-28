@@ -71,9 +71,10 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // and which profile (core or comaptiblity)
 
 	GLfloat vertices[] = {
-		 1.0f / 2.0f, 0.0f / 2.0f, 0.0f,
-		-1.0f / 2.0f, 0.0f / 2.0f, 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
-		 0.0f / 2.0f, 1.0f / 2.0f, 0.0f,						  // right most is 1.0f. likewise with y-coordinates.
+		 0.5f , 0.5f, 0.0f,
+		-0.5f , 0.5f, 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
+		-0.5f , 0.5f, 0.0f,						     // right most is 1.0f. likewise with y-coordinates.
+		-0.5f ,-0.5f, 0.0f
 	};
 
 
@@ -126,6 +127,22 @@ int main() {
 	// kinda makes sense that c.red would be a &red type 
 	// not *red
 
+
+	GLuint vertexShader;
+	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+
+	GLuint fragmentShader;
+	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+	
+
+
+
+
+	GLuint VAO, VBO;
+	//vertexArray object and vertexBuffer object
+	glBindVertexArray(VAO);
+	glBindBuffer(1, VBO);
+	
 	
 
 	while (!glfwWindowShouldClose(window_name))

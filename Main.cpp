@@ -128,21 +128,39 @@ int main() {
 	// not *red
 
 
-	GLuint vertexShader;
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+	glCompileShader(vertexShader);
 
-	GLuint fragmentShader;
+
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	
+	glCompileShader(fragmentShader);
+
+
+	GLuint shaderProgram = glCreateProgram();
+
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+
+
+	glLinkProgram(shaderProgram);
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
 
 
 
 
 	GLuint VAO, VBO;
 	//vertexArray object and vertexBuffer object
-	glBindVertexArray(VAO);
-	glBindBuffer(1, VBO);
+	glGenVertexArrays(1, &VBO);
+	glGenBuffers(1, &VBO);
 	
+	
+
+
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_TRUE, 3 * sizeof(float), (void*)0);
 	
 
 	while (!glfwWindowShouldClose(window_name))

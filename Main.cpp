@@ -71,9 +71,9 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // and which profile (core or comaptiblity)
 
 	GLfloat vertices[] = {
-		 1.0f / 2.0f, 0.0f / 2.0f, 0.0f,
-		-1.0f / 2.0f, 0.0f / 2.0f, 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
-		 0.0f / 2.0f, 1.0f / 2.0f, 0.0f,						  // right most is 1.0f. likewise with y-coordinates.
+		 0.5f , 0.5*(float)sqrt(3), 0.0f,
+		-0.5f , 0.5*(float)sqrt(3), 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
+		 0.5f , 0.5*(float)sqrt(3), 0.0f,						  // right most is 1.0f. likewise with y-coordinates.
 	};
 
 

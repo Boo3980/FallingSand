@@ -19,7 +19,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
 "void main()\n"
 "{\n"
-"	FragColor = vec4(0.8f, 0.3f, 0.02f, 1.0f);\n"
+"	FragColor = vec4(0.66f, 0.66f, 0.28f, 1.0f);\n"
 "}\n\0";
 
 
@@ -71,9 +71,9 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // and which profile (core or comaptiblity)
 
 	GLfloat vertices[] = {
-		 0.5f , 0.5*(float)sqrt(3), 0.0f,
-		-0.5f , 0.5*(float)sqrt(3), 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
-		 0.5f , 0.5*(float)sqrt(3), 0.0f,						  // right most is 1.0f. likewise with y-coordinates.
+		-0.5f ,-0.5f*float(sqrt(3))     / 3, 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
+		 0.5f ,-0.5f*float(sqrt(3))     / 3, 0.0f,
+		 0.0f , 0.5f*float(sqrt(3)) * 2 / 3, 0.0f,						   // right most is 1.0f. likewise with y-coordinates.
 	};
 
 
@@ -88,6 +88,70 @@ int main() {
 	gladLoadGL();
 
 	glViewport(0, 0, 800, 600);
+
+
+	// let me explain what the fuck is going on here
+	// so here we are creating a shader object.
+	// what does the object need? kaise object ko render kiya jaye
+	// that is why we have a glsl string function
+	// even i dont fucking know the string-y operations but aight
+	// what the ShaderSource is saying is that:
+	//		1. object is vertexShader
+	//		2. the entirety of the shader funcction is >>1<< string
+	//		3. where is the string? here-->vertexShaderSource<-- address
+	//		4. NULL?? it's basically what the string terminates with. 
+	//			if NULL then let OPENGL find what is ends with otherwise
+	//			we can specify with what each line ends is
+	//
+	//
+	//		oh SHIIIIITTTT. the string we choose to give is then 
+	//		COMPILED !!!. THE TEXT GETS COMPILED. IT MAKES SENSE NOW
+
+	GLuint vertexShader   = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource( vertexShader, 1, &vertexShaderSource, NULL);
+	glCompileShader(vertexShader);
+
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource( fragmentShader, 1, &fragmentShaderSource, NULL);
+	glCompileShader(fragmentShader);
+
+	GLuint shaderMachine  = glCreateProgram();
+	glAttachShader(shaderMachine,   vertexShader);
+	glAttachShader(shaderMachine, fragmentShader);
+
+	glLinkProgram( shaderMachine);
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+
+
+
+	GLuint VAO, VBO;
+
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	// arguments ( vertex group object starting position,
+	//				number of data per vertex, 
+	//				type of data,
+	//				is normalised?,
+	//				size of the data,
+	//				offset of data i think???  
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+
+
+
+
 
 	float r = 88.0f;//
 	float g = 25.0f;// rgb-->(0-255)
@@ -135,14 +199,23 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 		slowburn(c);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+		glUseProgram(shaderMachine);
+		glBindVertexArray(VAO);
+
+		// drawing function
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 		glfwSwapBuffers(window_name);
+
 		glfwSwapInterval(0);
 		glfwPollEvents();
 
 	}
 
 	
-	
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteProgram(shaderMachine);
 	glfwDestroyWindow(window_name);
 	glfwTerminate();
 	return 0;

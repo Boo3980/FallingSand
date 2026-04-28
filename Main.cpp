@@ -73,7 +73,7 @@ int main() {
 	GLfloat vertices[] = {
 		-0.5f ,-0.5f * float(sqrt(3))	/    3.0f, 0.0f,
 		 0.5f ,-0.5f * float(sqrt(3))	/    3.0f, 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
-		 0.5f , 0.5f * float(sqrt(3)) * 2  / 3.0f, 0.0f 						     // right most is 1.0f. likewise with y-coordinates.
+		 0.0f , 0.5f * float(sqrt(3)) * 2  / 3.0f, 0.0f 						     // right most is 1.0f. likewise with y-coordinates.
 	};
 
 
@@ -172,8 +172,8 @@ int main() {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
 		glUseProgram(shaderProgram);
+		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glBindVertexArray(0);
 		glfwSwapBuffers(window_name);
 		glfwSwapInterval(-1);
 		glfwPollEvents();

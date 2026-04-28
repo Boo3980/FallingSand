@@ -71,9 +71,10 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // and which profile (core or comaptiblity)
 
 	GLfloat vertices[] = {
-		-0.5f ,-0.5f * float(sqrt(3))	/    3.0f, 0.0f,
-		 0.5f ,-0.5f * float(sqrt(3))	/    3.0f, 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
-		 0.0f , 0.5f * float(sqrt(3)) * 2  / 3.0f, 0.0f 						     // right most is 1.0f. likewise with y-coordinates.
+		-0.5f ,-0.5f , 0.0f,
+		-0.5f , 0.5f , 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
+		 0.5f ,-0.5f , 0.0f, 						     // right most is 1.0f. likewise with y-coordinates.
+		 0.5f , 0.5f , 0.0f 
 	};
 
 
@@ -158,8 +159,8 @@ int main() {
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 3 * sizeof(float), (void*)0);
-	
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -173,7 +174,9 @@ int main() {
 
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
+
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 1, 3);
 		glfwSwapBuffers(window_name);
 		glfwSwapInterval(-1);
 		glfwPollEvents();

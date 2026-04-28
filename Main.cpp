@@ -154,8 +154,9 @@ int main() {
 
 	GLuint VAO = 0, VBO = 0;
 	//vertexArray object and vertexBuffer object
-	glGenVertexArrays(1, &VBO);
+	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_TRUE, 3 * sizeof(float), (void*)0);
@@ -171,7 +172,9 @@ int main() {
 		slowburn(c);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
-
+		glUseProgram(shaderProgram);
+		glDrawArrays(GL_TRIANGLES, )
+		glBindVertexArray(0);
 		glfwSwapBuffers(window_name);
 		glfwSwapInterval(0);
 		glfwPollEvents();

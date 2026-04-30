@@ -104,8 +104,7 @@ int main() {
 	GLuint shadermachine = glCreateProgram();
 	glAttachShader(shadermachine, vertexshader);
 	glAttachShader(shadermachine, fragmentshader);
-	glLinkProgram(shadermachine);
-
+	
 	glDeleteShader(vertexshader);
 	glDeleteShader(fragmentshader);
 
@@ -130,7 +129,6 @@ int main() {
 	
 
 	// now release the bind 
-	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -181,7 +179,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 		slowburn(c);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-		
+		glEnableVertexAttribArray(vertexArrayObject);
 
 		glUseProgram(shadermachine);
 		glBindVertexArray(vertexArrayObject);

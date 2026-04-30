@@ -118,16 +118,19 @@ int main() {
 	glGenVertexArrays(1, &vertexArrayObject);
 	glGenBuffers(1,      &vertexBufferObject);
 
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
+	glBindVertexArray(GL_ELEMENT_ARRAY_BUFFER);
 	// now we give the buffers access to the data
 	glVertexAttribPointer(vertexArrayObject, 3, GL_UNSIGNED_INT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glBufferData(vertexBufferObject, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-	glBindVertexArray(GL_ELEMENT_ARRAY_BUFFER);
+	
 
 	// now release the bind 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+
 	float r = 88.0f;//
 	float g = 25.0f;// rgb-->(0-255)
 	float b = 0.0f; //
@@ -176,7 +179,8 @@ int main() {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		glEnableVertexAttribArray(vertexArrayObject);
 
-
+		glUseProgram(shadermachine);
+		glBindVertexArray(vertexArrayObject);
 		glfwSwapBuffers(window_name);
 
 		glfwSwapInterval(0);

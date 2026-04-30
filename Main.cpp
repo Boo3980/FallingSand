@@ -9,19 +9,6 @@
 
 
 
-const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
-const char* fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"	FragColor = vec4(0.66f, 0.66f, 0.28f, 1.0f);\n"
-"}\n\0";
-
 
 struct color {
 	float *red, *green, * blue;
@@ -71,14 +58,22 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // and which profile (core or comaptiblity)
 
 	GLfloat vertices[] = {
-		-0.5f ,-0.5f*float(sqrt(3))     / 3, 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
-		 0.5f ,-0.5f*float(sqrt(3))     / 3, 0.0f,
-		 0.0f , 0.5f*float(sqrt(3)) * 2 / 3, 0.0f,						   // right most is 1.0f. likewise with y-coordinates.
+		-0.5f    ,-0.5f * float(sqrt(3))     / 3, 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
+		 0.5f    ,-0.5f * float(sqrt(3))     / 3, 0.0f,
+		 0.0f    , 0.5f * float(sqrt(3)) * 2 / 3, 0.0f,						   // right most is 1.0f. likewise with y-coordinates.
+		-0.5f / 2, 0.5f * float(sqrt(3))     / 6, 0.0f,
+		 0.5f / 2, 0.5f * float(sqrt(3))     / 6, 0.0f,
+		 0.0f    ,-0.5f * float(sqrt(3))     / 3, 0.0f
 	};
 
+	GLuint indices[] = {
+		0, 3, 5,
+		1, 4, 5,
+		2, 3, 4
+	};
 
 	// object initialisation (width, height, name, )
-	GLFWwindow* window_name = glfwCreateWindow(800, 600, "OPENGLTRIAL", NULL, NULL);
+	GLFWwindow* window_name = glfwCreateWindow(800, 800, "OPENGLTRIAL", NULL, NULL);
 	
 	glfwMakeContextCurrent(window_name);
 	// [https://www.glfw.org/docs/latest/group__window.html#ga3c96d80d363e67d13a41b5d1821f3242]
@@ -87,7 +82,7 @@ int main() {
 
 	gladLoadGL();
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, 800, 800);
 
 
 	// let me explain what the fuck is going on here
@@ -122,19 +117,22 @@ int main() {
 	glLinkProgram( shaderMachine);
 
 	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+	glDeleteShader(fragmentShader);	
 
 
+	
 
-
-	GLuint VAO, VBO;
+	GLuint VAO, VBO, EBO;
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+	// Bind buffers and arrays
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ARRAY_BUFFER,         sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices) , indices , GL_STATIC_DRAW);
 	// arguments ( vertex group object starting position,
 	//				number of data per vertex, 
 	//				type of data,
@@ -147,6 +145,7 @@ int main() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 
 
@@ -204,7 +203,8 @@ int main() {
 		glBindVertexArray(VAO);
 
 		// drawing function
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		//glDrawArrays(GL_TRIANGLES, 0, 3); outdated lmao
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(window_name);
 
 		glfwSwapInterval(0);
@@ -215,6 +215,7 @@ int main() {
 	
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
 	glDeleteProgram(shaderMachine);
 	glfwDestroyWindow(window_name);
 	glfwTerminate();

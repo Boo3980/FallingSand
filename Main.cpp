@@ -121,16 +121,18 @@ int main() {
 	// but for that we need array of vertices (opengl object form)
 	// a buffer that opengl can access
 	
-	GLuint vertexArrayObject, vertexBufferObject;
+	GLuint vertexArrayObject, vertexBufferObject, EBO;
 
 	glGenVertexArrays(1, &vertexArrayObject);
 	glGenBuffers(1,      &vertexBufferObject);
+	glGenBuffers(1, &EBO);
 
 	glBindVertexArray(vertexArrayObject);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	// now we give the buffers access to the data
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER,         sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices),   indices, GL_STATIC_DRAW);
 	glVertexAttribPointer(vertexArrayObject, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	
 
@@ -138,8 +140,9 @@ int main() {
 	// now release the bind 
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 
+	glBindVertexArray(0);
 
 	float r = 88.0f;//
 	float g = 25.0f;// rgb-->(0-255)
@@ -193,7 +196,7 @@ int main() {
 		glBindVertexArray(vertexArrayObject);
 
 		//glDrawArrays(GL_TRIANGLES, 0, 3);
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, indices);
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(window_name);
 
 		glfwSwapInterval(0);

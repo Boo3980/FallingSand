@@ -104,7 +104,7 @@ int main() {
 	GLuint shadermachine = glCreateProgram();
 	glAttachShader(shadermachine, vertexshader);
 	glAttachShader(shadermachine, fragmentshader);
-	
+	glLinkProgram(shadermachine);
 	glDeleteShader(vertexshader);
 	glDeleteShader(fragmentshader);
 

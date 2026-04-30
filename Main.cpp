@@ -118,8 +118,9 @@ int main() {
 	glGenVertexArrays(1, &vertexArrayObject);
 	glGenBuffers(1,      &vertexBufferObject);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
 	glBindVertexArray(GL_ELEMENT_ARRAY_BUFFER);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
+	
 	// now we give the buffers access to the data
 	glVertexAttribPointer(vertexArrayObject, 3, GL_UNSIGNED_INT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glBufferData(vertexBufferObject, sizeof(vertices), vertices, GL_STATIC_DRAW);

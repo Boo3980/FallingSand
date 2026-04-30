@@ -118,7 +118,7 @@ int main() {
 	glGenVertexArrays(1, &vertexArrayObject);
 	glGenBuffers(1,      &vertexBufferObject);
 
-	glBindVertexArray(GL_ELEMENT_ARRAY_BUFFER);
+	glBindVertexArray(vertexArrayObject);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
 	
 	// now we give the buffers access to the data

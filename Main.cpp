@@ -76,9 +76,9 @@ int main() {
 		-0.5f ,-0.5f*float(sqrt(3))     / 3, 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
 		 0.5f ,-0.5f*float(sqrt(3))     / 3, 0.0f,
 		 0.0f , 0.5f*float(sqrt(3)) * 2 / 3, 0.0f,						   // right most is 1.0f. likewise with y-coordinates.
-		-0.5f ,-0.5f*float(sqrt(3))     / 6, 0.0f,
-		 0.5f ,-0.5f*float(sqrt(3))     / 6, 0.0f,
-		 0.0f ,-0.5f*float(sqrt(3))        , 0.0f 
+		-0.5f/2, 0.5f*float(sqrt(3))     / 6, 0.0f,
+		 0.5f/2, 0.5f*float(sqrt(3))     / 6, 0.0f,
+		 0.0f ,-0.5f*float(sqrt(3))      /3 , 0.0f 
 	};
 
 	GLuint indices[] = {

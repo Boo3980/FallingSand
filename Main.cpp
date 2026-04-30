@@ -182,6 +182,9 @@ int main() {
 
 		glUseProgram(shadermachine);
 		glBindVertexArray(vertexArrayObject);
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
 		glfwSwapBuffers(window_name);
 
 		glfwSwapInterval(0);

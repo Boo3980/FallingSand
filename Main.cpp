@@ -76,8 +76,16 @@ int main() {
 		-0.5f ,-0.5f*float(sqrt(3))     / 3, 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
 		 0.5f ,-0.5f*float(sqrt(3))     / 3, 0.0f,
 		 0.0f , 0.5f*float(sqrt(3)) * 2 / 3, 0.0f,						   // right most is 1.0f. likewise with y-coordinates.
+		-0.5f ,-0.5f*float(sqrt(3))     / 6, 0.0f,
+		 0.5f ,-0.5f*float(sqrt(3))     / 6, 0.0f,
+		 0.0f ,-0.5f*float(sqrt(3))        , 0.0f 
 	};
 
+	GLuint indices[] = {
+		0, 3, 5,
+		2, 3, 4,
+		1, 4, 5
+	};
 
 	// object initialisation (width, height, name, )
 	GLFWwindow* window_name = glfwCreateWindow(800, 600, "OPENGLTRIAL", NULL, NULL);
@@ -126,7 +134,6 @@ int main() {
 	glVertexAttribPointer(vertexArrayObject, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	
 
-	
 
 	// now release the bind 
 	glEnableVertexAttribArray(0);
@@ -185,8 +192,8 @@ int main() {
 		glUseProgram(shadermachine);
 		glBindVertexArray(vertexArrayObject);
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-
+		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, indices);
 		glfwSwapBuffers(window_name);
 
 		glfwSwapInterval(0);

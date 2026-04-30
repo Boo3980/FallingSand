@@ -98,9 +98,25 @@ int main() {
 	glShaderSource(vertexshader,  1,  &vertexShaderSource, NULL);
 	glShaderSource(fragmentshader, 1, &fragmentShaderSource, NULL);
 	// COMPILE IN REAL TIME the string holy shiht
-	glCompile(vertexshader);
-	glCompile(fragmentshader);
+	glCompileShader(vertexshader);
+	glCompileShader(fragmentshader);
 
+
+
+	// okay shaders created now where to apply?
+	// on vertices and stuff. 
+	// but for that we need array of vertices (opengl object form)
+	// a buffer that opengl can access
+	
+
+	GLuint vertexArrayObject, vertexBufferObject;
+
+	glGenVertexArrays(1, &vertexArrayObject);
+	glGenBuffers(1,      &vertexBufferObject);
+
+	// now we give the buffers access to the data
+	glVertexAttribPointer()
+	glBufferData(vertexBufferObject, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 
 	float r = 88.0f;//

@@ -99,13 +99,13 @@ int main() {
 
 	glViewport(0, 0, 800, 600);
 
-	// first create vertex and fragment shaders
+
 	GLuint vertexshader   = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragmentshader = glCreateShader(GL_FRAGMENT_SHADER);
-	// what's the source?
+
 	glShaderSource(vertexshader,  1,  &vertexShaderSource, NULL);
 	glShaderSource(fragmentshader, 1, &fragmentShaderSource, NULL);
-	// COMPILE IN REAL TIME the string holy shiht
+
 	glCompileShader(vertexshader);
 	glCompileShader(fragmentshader);
 
@@ -116,11 +116,6 @@ int main() {
 	glDeleteShader(vertexshader);
 	glDeleteShader(fragmentshader);
 
-	// okay shaders created now where to apply?
-	// on vertices and stuff. 
-	// but for that we need array of vertices (opengl object form)
-	// a buffer that opengl can access
-	
 	GLuint vertexArrayObject, vertexBufferObject, EBO;
 
 	glGenVertexArrays(1, &vertexArrayObject);
@@ -147,25 +142,7 @@ int main() {
 	float r = 88.0f;//
 	float g = 25.0f;// rgb-->(0-255)
 	float b = 0.0f; //
-	/*
-	float *r = nullptr;
-	float *g = nullptr;
-	float *b = nullptr;
-	*r = 0.0f;
-	*g = 0.0f;
-	*b = 0.0f;
-	^^^^^^^^ 
-	wtf is wrong with me i just need 
-	to make the floats normally. 
-	no need for them to be pointer
-	it makes no sense bro
-	i got so lost in the sauce that 
-	i somehow thought of making 
-	them into pointers. stoopiddd
-	anyways
 
-	*/
-	
 	color c = color(&r, &g, &b);
 
 	// i did color c(r,g,b) 
@@ -195,7 +172,6 @@ int main() {
 		glUseProgram(shadermachine);
 		glBindVertexArray(vertexArrayObject);
 
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
 		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(window_name);
 

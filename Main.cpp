@@ -73,18 +73,15 @@ int main() {
 	// time to re-code the entire day 2 thing AND more
 
 	GLfloat vertices[] = {
-		-0.5f   ,-0.5f * float(sqrt(3))     / 3, 0.0f,                          // for OpenGL the coordinates are normalised. leftmost for x is -1.0f 
-		 0.5f   ,-0.5f * float(sqrt(3))     / 3, 0.0f,
-		 0.0f   , 0.5f * float(sqrt(3)) * 2 / 3, 0.0f,						   // right most is 1.0f. likewise with y-coordinates.
-		-0.5f/2 , 0.5f * float(sqrt(3))     / 6, 0.0f,
-		 0.5f/2 , 0.5f * float(sqrt(3))     / 6, 0.0f,
-		 0.0f   ,-0.5f * float(sqrt(3))     / 3 ,0.0f 
+		-0.5f        , -0.5f * 2 / 3 ,0.0f, // 0
+		-0.5f * 2 / 3, -0.5f * 2 / 3 ,0.0f, // 1
+		 0.5f * 2 / 3, -0.5f * 2 / 3 ,0.0f, // 2
+		 0.5f        , -0.5f * 2 / 3 ,0.0f, // 3
+
 	};
 
 	GLuint indices[] = {
-		0, 3, 5,
-		2, 3, 4,
-		1, 4, 5
+		
 	};
 
 	// object initialisation (width, height, name, )
@@ -128,7 +125,7 @@ int main() {
 	// now we give the buffers access to the data
 	glBufferData(GL_ARRAY_BUFFER,         sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices),   indices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	
 
 
@@ -173,7 +170,7 @@ int main() {
 		glUseProgram(shadermachine);
 		glBindVertexArray(vertexArrayObject);
 
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 4, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(window_name);
 
 		glfwSwapInterval(0);

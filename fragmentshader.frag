@@ -1,9 +1,9 @@
 #version 330 core
 
-out vec4 FragColor;
+layout ( location = 0 ) in vec3 aPos;
 
 void main(){
 
-	FragColor = vec4(0.855f, 0.665f, 0.32f, 1.0f);
+	gl_Pos = vec4(0.855f, 0.665f, 0.32f, 1.0f);
 
 }
